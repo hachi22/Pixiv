@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.ClassesModels.ImatgesPopularLives;
 import cat.itb.pixiv.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NAdapterPopularLives extends RecyclerView.Adapter<NAdapterPopularLives.NAViewHolder>{
+public class NAdapterPopularLives extends RecyclerView.Adapter<NAdapterPopularLives.NAViewHolder> {
 
     private List<ImatgesPopularLives> imagesList;
 
@@ -27,7 +26,7 @@ public class NAdapterPopularLives extends RecyclerView.Adapter<NAdapterPopularLi
     @NonNull
     @Override
     public NAdapterPopularLives.NAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_popular_lives, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_popular_lives, parent, false);
         return new NAViewHolder(v);
     }
 
@@ -42,7 +41,7 @@ public class NAdapterPopularLives extends RecyclerView.Adapter<NAdapterPopularLi
     }
 
 
-    class NAViewHolder extends RecyclerView.ViewHolder{
+    class NAViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textViewTitle, textViewViews;
         CircleImageView userImage;
@@ -52,10 +51,10 @@ public class NAdapterPopularLives extends RecyclerView.Adapter<NAdapterPopularLi
             imageView = itemView.findViewById(R.id.image_view_illustrations_popular_lives);
             textViewTitle = itemView.findViewById(R.id.text_view_illustrations_name_popular_lives);
             textViewViews = itemView.findViewById(R.id.text_view_illustrations_views_popular_lives);
-            userImage=itemView.findViewById(R.id.popular_lives_user);
+            userImage = itemView.findViewById(R.id.popular_lives_user);
         }
 
-        public  void binData(ImatgesPopularLives imatgesP){
+        public void binData(ImatgesPopularLives imatgesP) {
             imageView.setImageResource(imatgesP.getImage());
             userImage.setImageResource(imatgesP.getImageUser());
             textViewTitle.setText(imatgesP.getUser());

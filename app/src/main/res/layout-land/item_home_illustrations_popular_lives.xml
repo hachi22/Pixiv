@@ -22,31 +22,32 @@
         android:id="@+id/text_view_illustrations_name_popular_lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="name"
+        android:text="@string/name"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="10dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        />
+        android:layout_marginStart="10dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/popular_lives_user"
         android:layout_height="30dp"
         android:layout_width="30dp"
         android:layout_marginTop="85dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
     <TextView
         android:id="@+id/text_view_illustrations_views_popular_lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="views"
+        android:text="@string/views"
         android:layout_marginTop="85dp"
         android:layout_marginLeft="50dp"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        />
+        android:layout_marginStart="50dp" />
 
     <ImageView
         android:layout_width="250dp"

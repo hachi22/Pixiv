@@ -40,7 +40,7 @@ public class ImatgesPopularLives {
         this.numViews = numViews;
     }
 
-    public ImatgesPopularLives( String user, int imageUser, int image, int numViews) {
+    public ImatgesPopularLives(String user, int imageUser, int image, int numViews) {
         this.user = user;
         this.imageUser = imageUser;
         this.image = image;

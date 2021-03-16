@@ -23,14 +23,14 @@
                 android:layout_height="25dp"
                 android:src="@drawable/corona"
                 android:layout_marginRight="5dp"
-                />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rankings"
+                android:text="@string/rankings"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
         </LinearLayout>
 
@@ -59,9 +59,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PixivVision"
+                android:text="@string/pixivvision"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
         </LinearLayout>
 
@@ -88,14 +88,14 @@
                 android:layout_height="25dp"
                 android:src="@drawable/likeheartredallred"
                 android:layout_marginRight="5dp"
-                />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recommended"
+                android:text="@string/recommended"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
         </LinearLayout>
 

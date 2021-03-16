@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cat.itb.pixiv.ClassesModels.ImatgesIllustrationsRecommended;
-import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.R;
 
-public class NAdapterIllustrationsRecommended extends RecyclerView.Adapter<NAdapterIllustrationsRecommended.NAViewHolder>{
+public class NAdapterIllustrationsRecommended extends RecyclerView.Adapter<NAdapterIllustrationsRecommended.NAViewHolder> {
 
     private List<ImatgesIllustrationsRecommended> imagesList;
 
@@ -25,7 +24,7 @@ public class NAdapterIllustrationsRecommended extends RecyclerView.Adapter<NAdap
     @NonNull
     @Override
     public NAdapterIllustrationsRecommended.NAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended, parent, false);
         return new NAViewHolder(v);
     }
 
@@ -40,8 +39,8 @@ public class NAdapterIllustrationsRecommended extends RecyclerView.Adapter<NAdap
     }
 
 
-    class NAViewHolder extends RecyclerView.ViewHolder{
-        ImageView imageViewimage, imageViewLike,proves;
+    class NAViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageViewimage, imageViewLike, proves;
 
         public NAViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -50,15 +49,15 @@ public class NAdapterIllustrationsRecommended extends RecyclerView.Adapter<NAdap
             imageViewLike = itemView.findViewById(R.id.image_view_illustrations_recommended_like);
         }
 
-        public  void binData(ImatgesIllustrationsRecommended imatgesP){
+        public void binData(ImatgesIllustrationsRecommended imatgesP) {
             final boolean[] heart = {false};
             imageViewimage.setImageResource(imatgesP.getImage());
             imageViewLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(heart[0]){
+                    if (heart[0]) {
                         imageViewLike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageViewLike.setImageResource(R.drawable.likeheartred);
+                    } else imageViewLike.setImageResource(R.drawable.likeheartred);
                     heart[0] = !heart[0];
                 }
             });

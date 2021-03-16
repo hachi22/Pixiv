@@ -20,7 +20,7 @@
         android:layout_marginTop="40dp"
         android:layout_toRightOf="@id/profile_image"
         android:textSize="20sp"
-        android:text="Username"
+        android:text="@string/username"
         android:layout_toEndOf="@id/profile_image" />
 
     <Button
@@ -28,10 +28,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profileName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="19dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:layout_toEndOf="@id/profile_image"
         android:layout_toRightOf="@id/profile_image"
-        android:text="About pixiv Premium"
+        android:text="@string/about_pixiv_premium"
         android:textColor="@color/premiumButton"
         android:textSize="12sp" />
 

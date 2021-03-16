@@ -7,17 +7,17 @@
 
         <item
             android:id="@+id/home"
-            android:title="Home"
+            android:title="@string/home"
             android:icon="@drawable/home"/>
 
         <item
             android:id="@+id/newest"
-            android:title="Newest"
+            android:title="@string/newest"
             android:icon="@drawable/newest"/>
 
         <item
             android:id="@+id/search"
-            android:title="Search"
+            android:title="@string/search"
             android:icon="@drawable/search"/>
 
     </group>
@@ -28,32 +28,32 @@
 
         <item
             android:id="@+id/submitWork"
-            android:title="Submit work"
+            android:title="@string/submit_work"
             android:icon="@drawable/submit_works"/>
 
         <item
             android:id="@+id/yourWorks"
-            android:title="Your works"
+            android:title="@string/your_works"
             android:icon="@drawable/your_works"/>
 
         <item
             android:id="@+id/collection"
-            android:title="Collection"
+            android:title="@string/collection"
             android:icon="@drawable/collection"/>
 
         <item
         android:id="@+id/browsingHistory"
-        android:title="Browsing history"
+        android:title="@string/browsing_history"
         android:icon="@drawable/browsing_history"/>
 
         <item
         android:id="@+id/markers"
-        android:title="Markers"
+        android:title="@string/markers"
         android:icon="@drawable/markers"/>
 
     </group>
 
-    <item android:title="Connection">
+    <item android:title="@string/connection">
         <menu>
 
     <group
@@ -62,16 +62,16 @@
 
         <item
             android:id="@+id/following"
-            android:title="Following" />
+            android:title="@string/following" />
 
         <item
             android:id="@+id/followers"
-            android:title="Followers"
+            android:title="@string/followers"
             />
 
         <item
             android:id="@+id/myPixiv"
-            android:title="My pixiv"
+            android:title="@string/my_pixiv"
             />
 
     </group>
@@ -79,7 +79,7 @@
 
     </item>
 
-    <item android:title="Others">
+    <item android:title="@string/others">
         <menu>
 
     <group
@@ -88,24 +88,24 @@
 
         <item
             android:id="@+id/feedback"
-            android:title="Feedback"
+            android:title="@string/feedback"
             android:icon="@drawable/feedback"/>
 
         <item
             android:id="@+id/help"
-            android:title="Help"
+            android:title="@string/help"
             android:icon="@drawable/help"
             />
 
         <item
             android:id="@+id/settings"
-            android:title="Settings"
+            android:title="@string/settings"
             android:icon="@drawable/settings"
             />
 
         <item
             android:id="@+id/muteSettings"
-            android:title="Mute settings"
+            android:title="@string/mute_settings"
             />
 
     </group>

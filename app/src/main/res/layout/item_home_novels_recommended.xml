@@ -17,19 +17,20 @@
         android:src="@color/colorAccent"
         android:layout_marginLeft="25dp"
         android:scaleType="centerCrop"
-        />
+        android:layout_marginStart="25dp" />
 
     <TextView
         android:id="@+id/text_view_novels_recommended_title"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Title"
+        android:hint="@string/tile"
         android:layout_toRightOf="@id/image_view_novels_recommended"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        />
+        android:layout_toEndOf="@id/image_view_novels_recommended"
+        android:layout_marginStart="30dp" />
 
     <ImageView
         android:id="@+id/image_view_novels_recommended_like"
@@ -40,7 +41,7 @@
         android:focusable="true"
         android:layout_toRightOf="@+id/text_view_novels_recommended_title"
         android:layout_marginTop="20dp"
-        />
+        android:layout_toEndOf="@+id/text_view_novels_recommended_title" />
 
     <TextView
         android:id="@+id/text_view_novels_recommended_user"
@@ -49,8 +50,9 @@
         android:layout_below="@id/image_view_novels_recommended_like"
         android:layout_toRightOf="@+id/image_view_novels_recommended"
         android:layout_marginLeft="30dp"
-        android:hint="user"
-        />
+        android:hint="@string/user"
+        android:layout_toEndOf="@+id/image_view_novels_recommended"
+        android:layout_marginStart="30dp" />
 
     <TextView
         android:id="@+id/text_view_novels_recommended_description"
@@ -59,9 +61,10 @@
         android:layout_toRightOf="@+id/image_view_novels_recommended"
         android:layout_below="@+id/text_view_novels_recommended_user"
         android:layout_marginLeft="30dp"
-        android:hint="descripció"
+        android:hint="@string/descripci"
         android:textSize="15sp"
-        />
+        android:layout_toEndOf="@+id/image_view_novels_recommended"
+        android:layout_marginStart="30dp" />
 
 
     <ImageView
@@ -72,7 +75,7 @@
         android:layout_below="@+id/image_view_novels_recommended"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
-        />
+        android:layout_marginStart="25dp" />
 
     <TextView
         android:id="@+id/text_view_novels_recommended_numlikes"
@@ -82,9 +85,10 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/reference"
         android:layout_marginTop="7dp"
-        android:hint="12345"
+        android:hint="@string/_12345"
         android:layout_marginBottom="15dp"
-        />
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/reference" />
 
     
 

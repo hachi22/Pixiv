@@ -9,12 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -39,21 +35,22 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         viewPager = v.findViewById(R.id.slide_view_pager);
-        tabLayout= v.findViewById(R.id.tablayout);
-        topAppBar= v.findViewById(R.id.top_appbar);
-        navigationView= v.findViewById(R.id.navigator_view);
-        drawerLayout= v.findViewById(R.id.drawer_layout);
+        tabLayout = v.findViewById(R.id.tablayout);
+        topAppBar = v.findViewById(R.id.top_appbar);
+        navigationView = v.findViewById(R.id.navigator_view);
+        drawerLayout = v.findViewById(R.id.drawer_layout);
 
-        SlideViewAdapter slideViewAdapter=new SlideViewAdapter(getFragmentManager());
-        slideViewAdapter.addFragment(FragmentHomeIllustrations.getInstance(),"Illustrations");
-        slideViewAdapter.addFragment(FragmentHomeManga.getInstance(),"Manga");
-        slideViewAdapter.addFragment(FragmentHomeNovels.getInstance(),"Novels");
+        SlideViewAdapter slideViewAdapter = new SlideViewAdapter(getFragmentManager());
+        slideViewAdapter.addFragment(FragmentHomeIllustrations.getInstance(), "Illustrations");
+        slideViewAdapter.addFragment(FragmentHomeManga.getInstance(), "Manga");
+        slideViewAdapter.addFragment(FragmentHomeNovels.getInstance(), "Novels");
         viewPager.setAdapter(slideViewAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -74,25 +71,14 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     }
 
-    /*
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            super.onBackPressed();
-        }
-    }
-
-     */
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)){
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);

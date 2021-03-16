@@ -1,20 +1,20 @@
 package cat.itb.pixiv.Adapater;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SlideViewAdapter extends FragmentStatePagerAdapter {
 
-    private final List<Fragment>fragmentList=new ArrayList<>();
-    private final List<String>stringList=new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> stringList = new ArrayList<>();
+
     public SlideViewAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
@@ -35,7 +35,8 @@ public class SlideViewAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return fragmentList.size();
     }
-    public void addFragment(Fragment fragment, String title){
+
+    public void addFragment(Fragment fragment, String title) {
         fragmentList.add(fragment);
         stringList.add(title);
 

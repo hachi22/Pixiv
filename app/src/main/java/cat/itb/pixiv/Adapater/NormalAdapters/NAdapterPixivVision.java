@@ -1,6 +1,5 @@
 package cat.itb.pixiv.Adapater.NormalAdapters;
 
-import android.support.v4.media.session.IMediaControllerCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.ClassesModels.ImatgesPixivVision;
 import cat.itb.pixiv.R;
 
-public class NAdapterPixivVision extends RecyclerView.Adapter<NAdapterPixivVision.NAViewHolder>{
+public class NAdapterPixivVision extends RecyclerView.Adapter<NAdapterPixivVision.NAViewHolder> {
 
     private List<ImatgesPixivVision> imagesList;
 
@@ -27,7 +25,7 @@ public class NAdapterPixivVision extends RecyclerView.Adapter<NAdapterPixivVisio
     @NonNull
     @Override
     public NAdapterPixivVision.NAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_pixivision, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_pixivision, parent, false);
         return new NAdapterPixivVision.NAViewHolder(v);
     }
 
@@ -42,7 +40,7 @@ public class NAdapterPixivVision extends RecyclerView.Adapter<NAdapterPixivVisio
     }
 
 
-    class NAViewHolder extends RecyclerView.ViewHolder{
+    class NAViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textViewTitle;
 
@@ -52,7 +50,7 @@ public class NAdapterPixivVision extends RecyclerView.Adapter<NAdapterPixivVisio
             textViewTitle = itemView.findViewById(R.id.text_view_manga_pixivvidion);
         }
 
-        public  void binData(ImatgesPixivVision imatgesP){
+        public void binData(ImatgesPixivVision imatgesP) {
             textViewTitle.setText(imatgesP.getTitle());
             imageView.setImageResource(imatgesP.getImage());
         }

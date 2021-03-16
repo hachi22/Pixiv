@@ -30,7 +30,7 @@ public class FragmentFirst extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_entry,container,false);
+        View v = inflater.inflate(R.layout.fragment_entry, container, false);
         title = v.findViewById(R.id.titleHomeScreen);
         login = v.findViewById(R.id.loginButton);
         login.setOnClickListener(new View.OnClickListener() {

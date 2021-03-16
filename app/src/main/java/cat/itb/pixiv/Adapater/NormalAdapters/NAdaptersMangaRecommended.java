@@ -9,15 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 import cat.itb.pixiv.ClassesModels.ImatgesMangaRecommended;
-import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.R;
 
-public class NAdaptersMangaRecommended extends RecyclerView.Adapter<NAdaptersMangaRecommended.NAViewHolder>{
+public class NAdaptersMangaRecommended extends RecyclerView.Adapter<NAdaptersMangaRecommended.NAViewHolder> {
 
     private List<ImatgesMangaRecommended> imagesList;
 
@@ -28,7 +25,7 @@ public class NAdaptersMangaRecommended extends RecyclerView.Adapter<NAdaptersMan
     @NonNull
     @Override
     public NAdaptersMangaRecommended.NAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_recommended, parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_recommended, parent, false);
         return new NAdaptersMangaRecommended.NAViewHolder(v);
     }
 
@@ -43,7 +40,7 @@ public class NAdaptersMangaRecommended extends RecyclerView.Adapter<NAdaptersMan
     }
 
 
-    class NAViewHolder extends RecyclerView.ViewHolder{
+    class NAViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewimage, imageViewlike;
         TextView textViewTitle, textViewDescription, textViewNumlikes;
 
@@ -56,14 +53,14 @@ public class NAdaptersMangaRecommended extends RecyclerView.Adapter<NAdaptersMan
             textViewNumlikes = itemView.findViewById(R.id.text_view_manga_recommended_numlikes);
         }
 
-        public  void binData(ImatgesMangaRecommended imatgesP){
+        public void binData(ImatgesMangaRecommended imatgesP) {
             final boolean[] heart = {false};
             imageViewlike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(heart[0]){
+                    if (heart[0]) {
                         imageViewlike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageViewlike.setImageResource(R.drawable.likeheartred);
+                    } else imageViewlike.setImageResource(R.drawable.likeheartred);
                     heart[0] = !heart[0];
                 }
             });

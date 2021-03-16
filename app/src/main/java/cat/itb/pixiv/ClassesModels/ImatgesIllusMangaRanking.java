@@ -23,7 +23,6 @@ public class ImatgesIllusMangaRanking {
     }
 
 
-
     public String getUser() {
         return user;
     }
