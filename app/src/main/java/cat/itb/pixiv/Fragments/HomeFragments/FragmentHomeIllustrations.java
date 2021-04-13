@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -53,6 +55,10 @@ public static FragmentHomeIllustrations getInstance(){
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_illustrations, container, false);
         FireBaseHelper.setAllReferences();
+
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        String u=user.getUid();
 
 
         recyclerView = rootView.findViewById(R.id.recycler_view_illustrations_ranking);
