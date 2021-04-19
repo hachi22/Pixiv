@@ -25,6 +25,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import cat.itb.pixiv.Adapater.SlideViewAdapter;
 import cat.itb.pixiv.BlankFragment;
+import cat.itb.pixiv.Fragments.FavoriteFragment.FavoriteFragment;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeManga;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new YourWorksFragment()).commit();
                 break;
             case R.id.collection:
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new FavoriteFragment()).commit();
                 break;
             case R.id.browsingHistory:
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();

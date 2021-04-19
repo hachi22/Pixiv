@@ -1,10 +1,14 @@
 package cat.itb.pixiv.ClassesModels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     String username;
     String password;
     String key;
     String imatgePerfil;
+    List<String> favorites=new ArrayList<>();
 
     public User() {
     }
@@ -14,6 +18,14 @@ public class User {
         this.password = password;
         this.key = key;
         this.imatgePerfil = imatgePerfil;
+    }
+
+    public List<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<String> favorites) {
+        this.favorites = favorites;
     }
 
     public String getUsername() {
@@ -47,6 +59,20 @@ public class User {
     public void setImatgePerfil(String imatgePerfil) {
         this.imatgePerfil = imatgePerfil;
     }
+
+    public boolean isFaved(String id){
+        return favorites.contains(id);
+    }
+
+    public void removeFavorite(String id){
+        favorites.remove(id);
+    }
+
+    public void addFavorite(String id){
+        favorites.add(id);
+    }
+
+
 
     @Override
     public String toString() {

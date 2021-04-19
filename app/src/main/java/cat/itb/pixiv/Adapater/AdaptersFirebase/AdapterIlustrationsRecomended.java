@@ -19,12 +19,14 @@ import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
 import cat.itb.pixiv.ClassesModels.ImatgesP;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.LoginFragments.FragmentLogin;
 import cat.itb.pixiv.Fragments.onClickImage.FragmentOCIllustrations;
 import cat.itb.pixiv.R;
 
 
-public class AdapterIlustrationsRecomended extends FirebaseRecyclerAdapter<IllustrationClass, AdapterIlustrationsRecomended.ViewHolderIllustrationsRecommended> {
+public class AdapterIlustrationsRecomended extends FirebaseRecyclerAdapter<IllustrationClass, ViewHolderIllustrationsRecommended> {
 
     private IllustrationClass model;
     private Context context;
@@ -41,63 +43,69 @@ public class AdapterIlustrationsRecomended extends FirebaseRecyclerAdapter<Illus
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AdapterIlustrationsRecomended.ViewHolderIllustrationsRecommended holder, int position, @NonNull final IllustrationClass model) {
+    protected void onBindViewHolder(@NonNull ViewHolderIllustrationsRecommended holder, int position, @NonNull final IllustrationClass model) {
         this.model = model;
-        holder.bind(model);
-
-
+        holder.bind(model,getContext());
     }
 
     @NonNull
     @Override
-    public AdapterIlustrationsRecomended.ViewHolderIllustrationsRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AdapterIlustrationsRecomended.ViewHolderIllustrationsRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended,parent,false));
+    public ViewHolderIllustrationsRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolderIllustrationsRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended,parent,false));
+    }
+}
+
+ class ViewHolderIllustrationsRecommended extends RecyclerView.ViewHolder {
+
+    ImageView imageViewimage, imageViewLike;
+
+    public ViewHolderIllustrationsRecommended(@NonNull View itemView) {
+        super(itemView);
+        imageViewimage = itemView.findViewById(R.id.image_view_illustrations_recommended);
+        imageViewLike = itemView.findViewById(R.id.image_view_illustrations_recommended_like);
     }
 
-    class ViewHolderIllustrationsRecommended extends RecyclerView.ViewHolder {
+    public void bind(final IllustrationClass ilus, Context context){
+        Picasso.with(context).load(ilus.getIllustrationImgUrl()).into(imageViewimage);
+        User user = FireBaseHelper.getThisUser();
 
-        ImageView imageViewimage, imageViewLike;
-
-        public ViewHolderIllustrationsRecommended(@NonNull View itemView) {
-            super(itemView);
-
-            imageViewimage = itemView.findViewById(R.id.image_view_illustrations_recommended);
-            imageViewLike = itemView.findViewById(R.id.image_view_illustrations_recommended_like);
-
-
-
-
+        if (user != null) {
+            imageViewLike.setImageResource(user.isFaved(ilus.getKey())?R.drawable.likeheartred:R.drawable.likeheartwhite);
         }
 
-        public void bind(final IllustrationClass ilus){
-            Picasso.with(getContext()).load(model.getIllustrationImgUrl()).into(imageViewimage);
 
-            final boolean[] heart = {false};
-            imageViewLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(heart[0]){
-                        imageViewLike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageViewLike.setImageResource(R.drawable.likeheartred);
-                    heart[0] = !heart[0];
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = FireBaseHelper.getThisUser();
+
+                if (user == null) {
+                    return;
                 }
-            });
-
-            imageViewimage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(ilus!=null){
-                        Bundle argument=new Bundle();
-                        argument.putParcelable("illustrationRecommended",ilus);
-                        AppCompatActivity context=(AppCompatActivity)v.getContext();
-                        FragmentOCIllustrations fragmentOCIllustrations=new FragmentOCIllustrations();
-                        fragmentOCIllustrations.setArguments(argument);
-                        context.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentOCIllustrations).commit();
-                    }
+                String ilusId = ilus.getKey();
+                if (user.isFaved(ilusId)) {
+                    imageViewLike.setImageResource(R.drawable.likeheartwhite);
+                    user.removeFavorite(ilusId);
+                } else {
+                    imageViewLike.setImageResource(R.drawable.likeheartred);
+                    user.addFavorite(ilusId);
                 }
-            });
+                FireBaseHelper.updateDatabase(ilus);
+                FireBaseHelper.updateDatabase(user);
+            }
+        });
 
-        }
+        imageViewimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argument=new Bundle();
+                argument.putParcelable("illustrationRecommended",ilus);
+                AppCompatActivity context=(AppCompatActivity)v.getContext();
+                FragmentOCIllustrations fragmentOCIllustrations=new FragmentOCIllustrations();
+                fragmentOCIllustrations.setArguments(argument);
+                context.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentOCIllustrations).commit();
+            }
+        });
+
     }
-
 }
