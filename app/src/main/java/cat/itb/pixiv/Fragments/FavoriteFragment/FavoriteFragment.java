@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +42,7 @@ public class FavoriteFragment extends Fragment {
         recyclerView = v.findViewById(R.id.fav_recycler);
         dbref=FireBaseHelper.getReferenceIllustrationsRecommended();
         adapter=new AdapterFavFragment(ilus);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(adapter);
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
