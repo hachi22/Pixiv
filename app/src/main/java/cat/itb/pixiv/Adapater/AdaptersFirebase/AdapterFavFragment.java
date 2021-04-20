@@ -5,23 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
 import cat.itb.pixiv.ClassesModels.User;
 import cat.itb.pixiv.FireBase.FireBaseHelper;
-import cat.itb.pixiv.Fragments.onClickImage.FragmentOCIllustrations;
 import cat.itb.pixiv.R;
 
-public class AdapterFavFragment extends FirebaseRecyclerAdapter<IllustrationClass, ViewHolderIllustrationsRecommended> {
+public class AdapterFavFragment extends RecyclerView.Adapter<ViewHolderIllustrationsRecommended> {
+    private List<IllustrationClass> favlist;
     private Context context;
 
     public Context getContext() {
@@ -31,19 +29,8 @@ public class AdapterFavFragment extends FirebaseRecyclerAdapter<IllustrationClas
         this.context = context;
     }
 
-    public AdapterFavFragment(@NonNull FirebaseRecyclerOptions<IllustrationClass> options) {
-        super(options);
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolderIllustrationsRecommended holder, int position, @NonNull final IllustrationClass model) {
-        System.out.println(model.getKey());
-        User user = FireBaseHelper.getThisUser();
-        if (user == null) {
-            return;
-        }
-        if(user.isFaved(model.getKey()))
-        holder.bind(model,getContext());
+    public AdapterFavFragment(List<IllustrationClass>list){
+        this.favlist=list;
     }
 
     @NonNull
@@ -52,5 +39,21 @@ public class AdapterFavFragment extends FirebaseRecyclerAdapter<IllustrationClas
         return new ViewHolderIllustrationsRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended,parent,false));
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolderIllustrationsRecommended holder, int position) {
+        IllustrationClass model=favlist.get(position);
+        User user = FireBaseHelper.getThisUser();
+        if (user == null) {
+            return;
+        }
+        if(user.isFaved(model.getKey()))
+        holder.bind(model,getContext());
+    }
 
+
+    @Override
+    public int getItemCount() {
+        return favlist.size();
+    }
 }
+
