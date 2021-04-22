@@ -95,14 +95,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return v;
 
     }
@@ -124,6 +116,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             Picasso.with(getContext()).load(url).into(profilePic);
 
             FireBaseHelper.comprimirImatge(getContext(), url);
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            FireBaseHelper.subirImagenPerfil(FireBaseHelper.getUrlImage());
+
+
         }
         if(requestCode == REQUEST_IMAGE_CAPTURE){
             Uri imageUri = CropImage.getPickImageResultUri(getContext(),data);
@@ -151,6 +153,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
      */
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -177,6 +180,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 FragmentLogin fragmentLogin = new FragmentLogin();
                 fragmentLogin.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentLogin).commit();
+                break;
+            case R.id.changeImg:
+                CropImage.startPickImageActivity(getContext(), HomeFragment.this);
                 break;
             case R.id.collection:
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlankFragment()).commit();

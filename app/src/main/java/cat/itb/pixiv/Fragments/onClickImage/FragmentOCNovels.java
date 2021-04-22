@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.MangaClass;
 import cat.itb.pixiv.ClassesModels.NovelClass;
+import cat.itb.pixiv.Fragments.HomeFragment;
+import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
 import cat.itb.pixiv.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +39,6 @@ public class FragmentOCNovels extends Fragment {
         description=v.findViewById(R.id.novel_oc_description);
         exitButton=v.findViewById(R.id.novel_oc_close);
         favbutton=v.findViewById(R.id.novel_oc_favbutton);
-
         Bundle arguments=getArguments();
         NovelClass novel =arguments.getParcelable("novelRecomended");
         if(novel!=null){
@@ -49,6 +51,8 @@ public class FragmentOCNovels extends Fragment {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHomeNovels()).commit();
 
             }
         });
