@@ -62,7 +62,7 @@ public class FragmentSubmitNovels extends Fragment {
             @Override
             public void onClick(View v) {
 
-                fireBaseHelper.subirMyWork(new NovelClass( 1, title.getText().toString(), description.getText().toString(), content.getText().toString(), "Miquel",  FireBaseHelper.getUrlImage(), FireBaseHelper.getDefaultUserImage()));
+                fireBaseHelper.subirMyWork(new NovelClass( 1, title.getText().toString(), description.getText().toString(), content.getText().toString(), FireBaseHelper.getThisUser().getUsername(),  FireBaseHelper.getUrlImage(), FireBaseHelper.getDefaultUserImage()));
 
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();

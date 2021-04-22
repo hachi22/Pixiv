@@ -81,7 +81,7 @@ public class AdapterNovelsRecommended extends FirebaseRecyclerAdapter<NovelClass
 
             textViewTitle.setText(model.getTitle());
             textViewDescription.setText(model.getDescription());
-            textViewNumlikes.setText(model.getLikesNumber());
+            textViewNumlikes.setText(String.valueOf(model.getLikesNumber()));
 
             imageViewimage.setOnClickListener(new View.OnClickListener() {
                 @Override
