@@ -12,10 +12,12 @@
       >
 
 
+
       <RelativeLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:id="@+id/novels_oc_header">
+
           <de.hdodenhof.circleimageview.CircleImageView
               android:id="@+id/novel_oc_ProfileImage"
               android:layout_width="50dp"
@@ -98,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:iconGravity="textStart"
-                app:icon="@drawable/likeheartwhite"
+                app:icon="@drawable/close"
                 android:layout_weight="0.5"/>
 
 
