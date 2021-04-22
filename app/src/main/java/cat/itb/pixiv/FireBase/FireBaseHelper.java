@@ -160,7 +160,7 @@ public class FireBaseHelper {
 
                             userExists[0] = true;
                             if(user.getPassword().equals(password)){
-                                keyU = user.getKey();
+                                keyU = user.getUsername();
                                 userExists[1] = true;
                             }
                         }
@@ -177,9 +177,8 @@ public class FireBaseHelper {
 
 
     public static void subirNuevoUser(String userName, String password){
-        String key = referenceUsers.push().getKey();
-        keyU = key;
-        referenceUsers.child(key).setValue(new User(userName, password,key, defaultUserImage));
+        keyU = userName;
+        referenceUsers.child(userName).setValue(new User(userName, password,"key", defaultUserImage));
     }
 
     public static void subirImagenPerfil(String url){
@@ -288,8 +287,8 @@ public class FireBaseHelper {
     public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
-        //ref.child(user.getKey()).setValue(user);
-        if (user.equals(referenceUsers.getKey()))
+        ref.child(user.getUsername()).setValue(user);
+
         //
         //poner a la persona que le sigue alguien
          ref = followers.getRef();
@@ -298,7 +297,7 @@ public class FireBaseHelper {
     }
 
     public static void eliminarUserFollow(User user){
-        following.child(user.getKey()).removeValue();
+        following.child(user.getUsername()).removeValue();
 
         DatabaseReference ref = followers.getRef();
         ref.child(thisUser.getKey()).removeValue();
@@ -316,7 +315,7 @@ public class FireBaseHelper {
                 for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
                     assert user != null;
-                    if(user.getKey().equals(keyU)){
+                    if(user.getUsername().equals(keyU)){
                         urlIU[0] = user.getImatgePerfil();
                     }
                 }
