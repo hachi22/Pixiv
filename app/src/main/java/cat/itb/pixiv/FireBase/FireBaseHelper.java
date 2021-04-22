@@ -285,10 +285,11 @@ public class FireBaseHelper {
     }
 //endregion
 
-    public static void subirUserFollow(User user){
+    public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
-        ref.child(user.getKey()).setValue(user);
+        //ref.child(user.getKey()).setValue(user);
+        if (user.equals(referenceUsers.getKey()))
         //
         //poner a la persona que le sigue alguien
          ref = followers.getRef();

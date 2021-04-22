@@ -68,6 +68,16 @@
 
                 </LinearLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/followButtonManga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Follow"
+                    android:layout_marginLeft="75dp"
+                    android:textColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    />
+
 
             </LinearLayout>
 
@@ -86,7 +96,10 @@
                 android:textSize="16sp"
                 />
 
+
+
         </LinearLayout>
+
 
 
         </LinearLayout>
