@@ -251,7 +251,7 @@ public class FireBaseHelper {
         novel.setKey(keyI);
         ref.child(keyI).setValue(novel);
 
-        ref = referenceMangaRecommended.getRef();
+        ref = referenceNovelsRecommended.getRef();
         novel.setKey(keyI);
         ref.child(keyI).setValue(novel);
     }
