@@ -34,6 +34,16 @@
               android:layout_toRightOf="@id/novel_oc_ProfileImage"
               android:layout_toEndOf="@id/novel_oc_ProfileImage" />
 
+          <com.google.android.material.button.MaterialButton
+              android:id="@+id/followButtonNovels"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Follow"
+              android:layout_marginLeft="150dp"
+              android:textColor="@color/colorPrimary"
+              style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+              />
+
       </RelativeLayout>
 
       <androidx.core.widget.NestedScrollView

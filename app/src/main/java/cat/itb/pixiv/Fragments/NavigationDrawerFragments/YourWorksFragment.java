@@ -161,8 +161,8 @@ public class YourWorksFragment extends Fragment {
     public void onStart() {
         super.onStart();
         adapterYourWorksIllustrations.startListening();
-        adapterYourWorksManga.startListening();
-        adapterYourWorksNovels.startListening();
+//        adapterYourWorksManga.startListening();
+//        adapterYourWorksNovels.startListening();
 
     }
 
@@ -170,8 +170,8 @@ public class YourWorksFragment extends Fragment {
     public void onStop() {
         super.onStop();
         adapterYourWorksIllustrations.stopListening();
-        adapterYourWorksManga.stopListening();
-        adapterYourWorksNovels.stopListening();
+//        adapterYourWorksManga.stopListening();
+//        adapterYourWorksNovels.stopListening();
 
     }
 }

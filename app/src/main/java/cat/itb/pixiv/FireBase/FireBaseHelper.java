@@ -43,7 +43,6 @@ import id.zelory.compressor.Compressor;
 
 import static android.content.ContentValues.TAG;
 import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static cat.itb.pixiv.FireBase.FireBaseHelper.pujarImatge;
 
 public class FireBaseHelper {
 
@@ -80,6 +79,7 @@ public class FireBaseHelper {
     private static DatabaseReference userMyWorksIllustrations;
     private static DatabaseReference userMyWorksManga;
     private static DatabaseReference userMyWorksNovels;
+    private static DatabaseReference userFollower;
 
     private static DatabaseReference userMyWorksPublicIllustrations;
     private static DatabaseReference userMyWorksPublicManga;
@@ -284,10 +284,11 @@ public class FireBaseHelper {
     }
 //endregion
 
-    public static void subirUserFollow(User user){
+    public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
         ref.child(user.getUsername()).setValue(user);
+
         //
         //poner a la persona que le sigue alguien
          ref = followers.getRef();
@@ -351,7 +352,6 @@ public class FireBaseHelper {
     //region MANEJO_DE_IMAGEN
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void comprimirImatge(Context context, File url){
-        System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222");
         DatabaseReference imageReference=null;
         byte [] thumb_byte;
         Bitmap thumb_bitmap = null;
@@ -371,12 +371,11 @@ public class FireBaseHelper {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90,byteArrayOutputStream);
         thumb_byte = byteArrayOutputStream.toByteArray();
-        System.out.println("000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        pujarImatge(thumb_byte, imageReference, context);
+        pujarImatge(thumb_byte, imageReference);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void pujarImatge(byte[] thumb_byte, DatabaseReference imageReference, Context context){
+    public static void pujarImatge(byte[] thumb_byte, DatabaseReference imageReference){
         final String[] nombreImagen = {""};
 
 
@@ -415,8 +414,8 @@ public class FireBaseHelper {
             return ref.getDownloadUrl();
         }).addOnCompleteListener(task -> {
             Uri downloadUri = task.getResult();
-//            imageReference.push().child("urlfoto").setValue(downloadUri.toString());
-//            System.out.println("Todo OK pujada feta");
+            //imageReference.push().child("urlfoto").setValue(downloadUri.toString());
+            System.out.println("Todo OK pujada feta");
             urlImage =  downloadUri.toString();
         });
 
@@ -484,6 +483,10 @@ public class FireBaseHelper {
 
     public static DatabaseReference getUserMyWorksIllustrations() {
         return userMyWorksIllustrations;
+    }
+
+    public static DatabaseReference getUserFollower() {
+        return userFollower;
     }
 
     public static DatabaseReference getUserMyWorksManga() {
