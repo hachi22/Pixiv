@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -287,19 +288,19 @@ public class FireBaseHelper {
     public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
-        ref.child(user.getUsername()).setValue(user);
+        ref.child(user).setValue(user);
 
-        //
+
         //poner a la persona que le sigue alguien
-         ref = followers.getRef();
+         referenceUsers.child(user).child("Followers").getRef();
          ref.child(thisUser.getKey()).setValue(thisUser);
          //
     }
 
-    public static void eliminarUserFollow(User user){
-        following.child(user.getUsername()).removeValue();
+    public static void eliminarUserFollow(String user){
+        following.child(user).removeValue();
 
-        DatabaseReference ref = followers.getRef();
+        DatabaseReference ref = referenceUsers.child(user).child("Followers").getRef();
         ref.child(thisUser.getKey()).removeValue();
 
     }
@@ -307,7 +308,7 @@ public class FireBaseHelper {
 
 
 
-    public static String buscarImagenPerfil(){
+    public static String buscarImagenPerfil(String name){
         final String[] urlIU = new String[1];
         referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -315,7 +316,7 @@ public class FireBaseHelper {
                 for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
                     assert user != null;
-                    if(user.getUsername().equals(keyU)){
+                    if(user.getUsername().equals(name)){
                         urlIU[0] = user.getImatgePerfil();
                     }
                 }
@@ -326,9 +327,11 @@ public class FireBaseHelper {
         return urlIU[0];
     }
 
-    public static String[] buscar3Imagenes(){
+    public static String[] buscar3Imagenes(String name){
         final String[] tresImagenes = new String[3];
-        userMyWorksIllustrations.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference ref = referenceUsers.child(name).child("MyWorks").child("Illustration");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
