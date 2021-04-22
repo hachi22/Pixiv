@@ -37,7 +37,7 @@ public class FragmentSubmitNovels extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.submit_work_novels, container, false);
 
-        submit = v.findViewById(R.id.submitIllustrationManga);
+        submit = v.findViewById(R.id.submitNovels);
         toolbar = v.findViewById(R.id.toolbar_subitwork_novels);
         title = v.findViewById(R.id.edit_text_title_submit_novel);
         description = v.findViewById(R.id.edit_text_description_submit_novel);
