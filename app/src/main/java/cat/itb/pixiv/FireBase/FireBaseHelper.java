@@ -173,7 +173,28 @@ public class FireBaseHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
 
+    public static boolean[] comprobarFollowing(String userFollowing){
+        final boolean[] follow = new boolean[1];
+        following.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String username = snapshot.getValue(String.class);
+                    System.out.println(userFollowing);
+                    System.out.println(username);
+                    if(userFollowing.equals(username)){
+                        follow[0] = true;
+                    }else{
+                        follow[0]=false;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        return follow;
     }
 
 

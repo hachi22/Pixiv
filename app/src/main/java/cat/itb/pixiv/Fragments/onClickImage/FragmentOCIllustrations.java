@@ -1,9 +1,13 @@
 package cat.itb.pixiv.Fragments.onClickImage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
@@ -61,9 +66,9 @@ public class FragmentOCIllustrations extends Fragment {
         });
 
         followButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-
 
                 following = !following;
                 if(following){
@@ -79,16 +84,36 @@ public class FragmentOCIllustrations extends Fragment {
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        System.out.println(backIllus);
-    }
 
-    private void setViews(IllustrationClass ilustration){
-        Picasso.with(getActivity()).load(ilustration.getIllustrationImgUrl()).into(image);
-   //         Picasso.with(getActivity()).load(ilustration.getUserImgUrl()).into(userimage);
-        username.setText(ilustration.getUserName());
-        title.setText(ilustration.getTitle());
+
+    @SuppressLint("SetTextI18n")
+    private void setViews(IllustrationClass ilustration) {
+
+
+        boolean noe = FireBaseHelper.comprobarFollowing(ilustration.getUserName())[0];
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+
+                if(noe){
+                    followButton.setText("following");
+                    following = true;
+                }else{
+                    followButton.setText("follow");
+                    following = false;
+                }
+
+                Picasso.with(getActivity()).load(ilustration.getIllustrationImgUrl()).into(image);
+                Picasso.with(getActivity()).load(ilustration.getUserImgUrl()).into(userimage);
+                username.setText(ilustration.getUserName());
+                title.setText(ilustration.getTitle());
+
+            }
+        }, 200);
+
+        System.out.println(noe);
+
+
     }
 }
