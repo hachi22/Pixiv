@@ -525,7 +525,7 @@ public class FireBaseHelper {
     }
 
     public static DatabaseReference getUserFollower() {
-        return userFollower;
+        return following;
     }
 
     public static DatabaseReference getUserMyWorksManga() {
