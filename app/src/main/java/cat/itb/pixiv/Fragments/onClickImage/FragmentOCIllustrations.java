@@ -88,15 +88,13 @@ public class FragmentOCIllustrations extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setViews(IllustrationClass ilustration) {
-
-
-        boolean noe = FireBaseHelper.comprobarFollowing(ilustration.getUserName())[0];
+        boolean isfollow = FireBaseHelper.comprobarFollowing(ilustration.getUserName())[0];
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-
-                if(noe){
+                System.out.println(isfollow);
+                if(isfollow){
                     followButton.setText("following");
                     following = true;
                 }else{
@@ -112,7 +110,7 @@ public class FragmentOCIllustrations extends Fragment {
             }
         }, 200);
 
-        System.out.println(noe);
+
 
 
     }
