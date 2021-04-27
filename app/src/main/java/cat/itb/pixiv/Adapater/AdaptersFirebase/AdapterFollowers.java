@@ -1,6 +1,8 @@
 package cat.itb.pixiv.Adapater.AdaptersFirebase;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,12 +18,13 @@ import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdapterFollowers extends FirebaseRecyclerAdapter<User, AdapterFollowers.ViewHolderFollowers> {
+public class AdapterFollowers extends FirebaseRecyclerAdapter<String, AdapterFollowers.ViewHolderFollowers> {
 
-private User model;
+private String model;
 private Context context;
 
 public Context getContext() {
@@ -31,12 +34,12 @@ public void setContext(Context context) {
         this.context = context;
         }
 
-public AdapterFollowers(@NonNull FirebaseRecyclerOptions<User> options) {
+public AdapterFollowers(@NonNull FirebaseRecyclerOptions<String> options) {
         super(options);
         }
 
 @Override
-protected void onBindViewHolder(@NonNull ViewHolderFollowers holder, int position, @NonNull User model) {
+protected void onBindViewHolder(@NonNull ViewHolderFollowers holder, int position, @NonNull String model) {
         this.model = model;
         holder.bind();
         }
@@ -52,6 +55,7 @@ class ViewHolderFollowers extends RecyclerView.ViewHolder {
     CircleImageView imageViewFollowers;
     TextView textViewUsername;
     MaterialButton followButton;
+    boolean following;
 
     public ViewHolderFollowers(@NonNull View itemView) {
         super(itemView);
@@ -60,9 +64,49 @@ class ViewHolderFollowers extends RecyclerView.ViewHolder {
     }
 
     public void bind(){
-        Picasso.with(getContext()).load(model.getImatgePerfil()).into(imageViewFollowers);
-        textViewUsername.setText(model.getUsername());
         followButton = itemView.findViewById(R.id.followButton);
+        boolean isfollow = FireBaseHelper.comprobarFollowing(model)[0];
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @SuppressLint("SetTextI18n")
+            public void run() {
+                System.out.println(isfollow);
+                if(isfollow){
+                    followButton.setText("following");
+                    following = true;
+                }else{
+                    followButton.setText("follow");
+                    following = false;
+                }
+
+
+            }
+        }, 200);
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+
+                following = !following;
+                if(following){
+                    followButton.setText("following");
+                    FireBaseHelper.subirUserFollow(model);
+                }else{
+                    followButton.setText("follow");
+                    FireBaseHelper.eliminarUserFollow(model);
+                }
+
+            }
+        });
+
+
+
+        Picasso.with(getContext()).load(model).into(imageViewFollowers);
+        ///metodo para cojer imagen de user
+
+        textViewUsername.setText(model);
+
 
 
     }
