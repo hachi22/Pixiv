@@ -1,25 +1,22 @@
 package cat.itb.pixiv.Adapater.AdaptersFirebase;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.util.List;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
+import cat.itb.pixiv.ClassesModels.NovelClass;
 import cat.itb.pixiv.ClassesModels.User;
 import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.R;
 
-public class AdapterFavFragment extends RecyclerView.Adapter<ViewHolderIllustrationsRecommended> {
-    private List<IllustrationClass> favlist;
+public class AdapterFavFragmentNovel extends RecyclerView.Adapter<ViewHolderNovelsRecommended>{
+    private List<NovelClass> favlist;
     private Context context;
 
     public Context getContext() {
@@ -29,31 +26,30 @@ public class AdapterFavFragment extends RecyclerView.Adapter<ViewHolderIllustrat
         this.context = context;
     }
 
-    public AdapterFavFragment(List<IllustrationClass>list){
+    public AdapterFavFragmentNovel(List<NovelClass>list){
         this.favlist=list;
     }
 
+
     @NonNull
     @Override
-    public ViewHolderIllustrationsRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderIllustrationsRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_recommended,parent,false));
+    public ViewHolderNovelsRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolderNovelsRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_novels_recommended,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderIllustrationsRecommended holder, int position) {
-        IllustrationClass model=favlist.get(position);
+    public void onBindViewHolder(@NonNull ViewHolderNovelsRecommended holder, int position) {
+        NovelClass model=favlist.get(position);
         User user = FireBaseHelper.getThisUser();
         if (user == null) {
             return;
         }
         if(user.isFaved(model.getKey()))
-        holder.bind(model,getContext());
+            holder.bind(model,getContext());
     }
-
 
     @Override
     public int getItemCount() {
         return favlist.size();
     }
 }
-

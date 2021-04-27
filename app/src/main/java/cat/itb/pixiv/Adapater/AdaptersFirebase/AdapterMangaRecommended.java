@@ -18,13 +18,15 @@ import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.ClassesModels.MangaClass;
+import cat.itb.pixiv.ClassesModels.NovelClass;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.onClickImage.FragmentOCIllustrations;
 import cat.itb.pixiv.Fragments.onClickImage.FragmentOCManga;
+import cat.itb.pixiv.Fragments.onClickImage.FragmentOCNovels;
 import cat.itb.pixiv.R;
 
-public class AdapterMangaRecommended extends FirebaseRecyclerAdapter<MangaClass, AdapterMangaRecommended.ViewHolderMangaRecommended> {
-
-    private MangaClass model;
+public class AdapterMangaRecommended extends FirebaseRecyclerAdapter<MangaClass, ViewHolderMangaRecommended> {
     private Context context;
 
     public Context getContext() {
@@ -39,64 +41,86 @@ public class AdapterMangaRecommended extends FirebaseRecyclerAdapter<MangaClass,
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AdapterMangaRecommended.ViewHolderMangaRecommended holder, int position, @NonNull MangaClass model) {
-        this.model = model;
-        holder.bind(model);
+    protected void onBindViewHolder(@NonNull ViewHolderMangaRecommended holder, int position, @NonNull MangaClass model) {
+        holder.bind(model,getContext(),false);
     }
 
     @NonNull
     @Override
-    public AdapterMangaRecommended.ViewHolderMangaRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AdapterMangaRecommended.ViewHolderMangaRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_recommended,parent,false));
+    public ViewHolderMangaRecommended onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolderMangaRecommended(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_recommended,parent,false),false);
     }
 
-    class ViewHolderMangaRecommended extends RecyclerView.ViewHolder {
+}
 
-        ImageView imageViewimage, imageViewlike;
-        TextView textViewTitle, textViewDescription, textViewNumlikes;
+class ViewHolderMangaRecommended extends RecyclerView.ViewHolder {
 
-        public ViewHolderMangaRecommended(@NonNull View itemView) {
-            super(itemView);
+    ImageView imageViewimage, imageViewLike;
+    TextView textViewTitle, textViewDescription, textViewNumlikes;
 
+    public ViewHolderMangaRecommended(@NonNull View itemView,boolean isimage) {
+        super(itemView);
+        if(!isimage){
             imageViewimage = itemView.findViewById(R.id.image_view_manga_recommended);
-            imageViewlike = itemView.findViewById(R.id.image_view_manga_recommended_like);
+            imageViewLike = itemView.findViewById(R.id.image_view_manga_recommended_like);
             textViewTitle = itemView.findViewById(R.id.text_view_manga_recommended_title);
             textViewDescription = itemView.findViewById(R.id.text_view_manga_recommended_description);
             textViewNumlikes = itemView.findViewById(R.id.text_view_manga_recommended_numlikes);
-
+        }else {
+            imageViewimage = itemView.findViewById(R.id.image_view_illustrations_recommended);
+            imageViewLike=itemView.findViewById(R.id.image_view_illustrations_recommended_like);
         }
 
-        public void bind(final MangaClass manga){
-            Picasso.with(getContext()).load(model.getMangaImgUrl()).into(imageViewimage);
-            final boolean[] heart = {false};
-            imageViewlike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(heart[0]){
-                        imageViewlike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageViewlike.setImageResource(R.drawable.likeheartred);
-                    heart[0] = !heart[0];
-                }
-            });
 
-            textViewTitle.setText(model.getTitle());
-            textViewDescription.setText(model.getDescription());
-            textViewNumlikes.setText(Integer.toString(model.getLikesNumber()));
+    }
+
+
+
+    public void bind(final MangaClass manga, Context context,boolean isImage){
+        Picasso.with(context).load(manga.getMangaImgUrl()).into(imageViewimage);
+        if(!isImage){
+            textViewTitle.setText(manga.getTitle());
+            textViewDescription.setText(manga.getDescription());
+//         textViewNumlikes.setText(manga.getLikesNumber());
+        }
+
+        User user = FireBaseHelper.getThisUser();
+
+        if (user != null) {
+            imageViewLike.setImageResource(user.isFaved(manga.getKey())?R.drawable.likeheartred:R.drawable.likeheartwhite);
+        }
+
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = FireBaseHelper.getThisUser();
+
+                if (user == null) {
+                    return;
+                }
+                String mangaId = manga.getKey();
+                if (user.isFaved(mangaId)) {
+                    imageViewLike.setImageResource(R.drawable.likeheartwhite);
+                    user.removeFavorite(mangaId);
+                } else {
+                    imageViewLike.setImageResource(R.drawable.likeheartred);
+                    user.addFavorite(mangaId);
+                }
+                FireBaseHelper.updateDatabase(manga);
+                FireBaseHelper.updateDatabase(user);
+            }
+        });
 
             imageViewimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(manga!=null){
-                        Bundle argument=new Bundle();
-                        argument.putParcelable("mangaRecomended",manga);
-                        AppCompatActivity context=(AppCompatActivity)v.getContext();
-                        FragmentOCManga fragmentOCManga=new FragmentOCManga();
-                        fragmentOCManga.setArguments(argument);
-                        context.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentOCManga).commit();
-                    }
+                    Bundle argument=new Bundle();
+                    argument.putParcelable("mangaRecomended",manga);
+                    AppCompatActivity context=(AppCompatActivity)v.getContext();
+                    FragmentOCManga fragmentOCManga=new FragmentOCManga();
+                    fragmentOCManga.setArguments(argument);
+                    context.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentOCManga).commit();
                 }
             });
-
-        }
     }
 }

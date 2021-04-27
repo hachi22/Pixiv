@@ -529,6 +529,15 @@ public class FireBaseHelper {
     {
      referenceIllustrationsRecommended.child(firebaseItem.getKey()).setValue(firebaseItem);
     }
+    public static void updateDatabase(MangaClass firebaseItem)
+    {
+        referenceMangaRecommended.child(firebaseItem.getKey()).setValue(firebaseItem);
+    }
+
+    public static void updateDatabase(NovelClass firebaseItem)
+    {
+        referenceNovelsRecommended.child(firebaseItem.getKey()).setValue(firebaseItem);
+    }
     public static void updateDatabase(User firebaseItem)
     {
      referenceUsers.child(firebaseItem.getKey()).setValue(firebaseItem);
