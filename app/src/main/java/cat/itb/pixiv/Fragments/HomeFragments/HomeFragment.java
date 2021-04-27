@@ -1,22 +1,16 @@
 package cat.itb.pixiv.Fragments.HomeFragments;
 
 import android.os.Bundle;
-import android.view.FrameStats;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -26,9 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import cat.itb.pixiv.Adapater.SlideViewAdapter;
 import cat.itb.pixiv.BlankFragment;
 import cat.itb.pixiv.Fragments.FavoriteFragment.FavoriteFragment;
-import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
-import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeManga;
-import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
+import cat.itb.pixiv.Fragments.FavoriteFragment.FavoriteFragmentIlusManga;
 import cat.itb.pixiv.Fragments.LoginFragments.FragmentLogin;
 import cat.itb.pixiv.Fragments.NavigationDrawerFragments.YourWorksFragment;
 import cat.itb.pixiv.R;

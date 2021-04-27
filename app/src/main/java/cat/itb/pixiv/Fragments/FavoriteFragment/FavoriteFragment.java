@@ -2,68 +2,69 @@ package cat.itb.pixiv.Fragments.FavoriteFragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cat.itb.pixiv.Adapater.AdaptersFirebase.AdapterFavFragment;
-import cat.itb.pixiv.Adapater.AdaptersFirebase.AdapterRankingIllustrations;
-import cat.itb.pixiv.ClassesModels.IllustrationClass;
-import cat.itb.pixiv.ClassesModels.User;
-import cat.itb.pixiv.FireBase.FireBaseHelper;
+import cat.itb.pixiv.Adapater.SlideViewAdapter;
+import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
+import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeManga;
+import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
 import cat.itb.pixiv.R;
 
-
 public class FavoriteFragment extends Fragment {
-    RecyclerView recyclerView;
-    AdapterFavFragment adapter;
-    public static List<IllustrationClass> ilus=new ArrayList<>();
-    DatabaseReference dbref;
+
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    private MaterialToolbar topAppBar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
        View v= inflater.inflate(R.layout.fragment_favorite, container, false);
-        recyclerView = v.findViewById(R.id.fav_recycler);
-        dbref=FireBaseHelper.getReferenceIllustrationsRecommended();
-        adapter=new AdapterFavFragment(ilus);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = FireBaseHelper.getThisUser();
-                IllustrationClass value;
-                for (DataSnapshot ilustration:snapshot.getChildren()){
-                    value=ilustration.getValue(IllustrationClass.class);
-                    if(user.isFaved(value.getKey())){
-                        ilus.add(value);
-                    }
+        viewPager = v.findViewById(R.id.slide_view_pager_fav);
+        tabLayout= v.findViewById(R.id.tablayout_favorite);
+        topAppBar= v.findViewById(R.id.top_appbar_favorite);
+        drawerLayout= v.findViewById(R.id.drawer_layout_fav);
 
-                    System.out.println(ilustration.getValue(IllustrationClass.class).getTitle());
-                }
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-        return v;
+        SlideViewAdapter slideViewAdapter=new SlideViewAdapter(getFragmentManager());
+        slideViewAdapter.addFragment(FavoriteFragmentIlusManga.getInstance(),"Illust/Manga");
+        slideViewAdapter.addFragment(FavoriteFragmentNovel.getInstance(),"Novels");
+        viewPager.setAdapter(slideViewAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                getActivity(),
+                drawerLayout,
+                topAppBar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+        );
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+       return v;
     }
-
-
 }

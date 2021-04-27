@@ -11,4 +11,5 @@
     <string name="openNavDrawer">Navigation Drawer open</string>
     <string name="closeNavDrawer">Navigation Drawer close</string>
     <string name="Description">Description</string>
+    <string name="Collection">Collection</string>
 </resources>
