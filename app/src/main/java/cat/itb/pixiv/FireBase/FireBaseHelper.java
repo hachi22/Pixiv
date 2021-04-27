@@ -285,15 +285,15 @@ public class FireBaseHelper {
     }
 //endregion
 
-    public static void subirUserFollow(User user){
+    public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
         ref.child(user).setValue(user);
 
 
         //poner a la persona que le sigue alguien
-         referenceUsers.child(user).child("Followers").getRef();
-         ref.child(thisUser.getKey()).setValue(thisUser);
+         ref = referenceUsers.child(user).child("Followers").getRef();
+         ref.child(thisUser.getUsername()).setValue(thisUser.getUsername());
          //
     }
 
@@ -328,9 +328,8 @@ public class FireBaseHelper {
     }
 
     public static String[] buscar3Imagenes(String name){
-        final String[] tresImagenes = new String[3];
+        final String[] cuatroImagenes = new String[4];
         DatabaseReference ref = referenceUsers.child(name).child("MyWorks").child("Illustration");
-
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -338,9 +337,9 @@ public class FireBaseHelper {
 
                     IllustrationClass image = snapshot.getValue(IllustrationClass.class);
                     assert image != null;
-                    for(int i = 0;i<tresImagenes.length;i++){
-                        if(tresImagenes[i]==null){
-                            tresImagenes[i] = image.getIllustrationImgUrl();
+                    for(int i = 0;i<cuatroImagenes.length && i<3;i++){
+                        if(cuatroImagenes[i]==null){
+                            cuatroImagenes[i] = image.getIllustrationImgUrl();
                         }
                     }
 
@@ -349,7 +348,23 @@ public class FireBaseHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-        return tresImagenes;
+
+        referenceImageUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    String perfilImage = snapshot.getValue(String.class);
+                    assert perfilImage != null;
+                    cuatroImagenes[3] = perfilImage;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+
+        return cuatroImagenes;
     }
 
     //region MANEJO_DE_IMAGEN
