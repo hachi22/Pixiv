@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
-import cat.itb.pixiv.Fragments.HomeFragment;
-import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,7 +24,7 @@ public class FragmentOCIllustrations extends Fragment {
     ImageView image;
     CircleImageView userimage;
     TextView username,title;
-    MaterialButton backIllus;
+    FloatingActionButton favbutton;
 
 
     @Override
@@ -36,25 +35,27 @@ public class FragmentOCIllustrations extends Fragment {
         userimage=v.findViewById(R.id.illustration_oc_ProfileImage);
         username=v.findViewById(R.id.illustration_text_view_oc_username);
         title=v.findViewById(R.id.illustration_text_view_oc_tittle);
-        backIllus = v.findViewById(R.id.backIllustration);
+        favbutton=v.findViewById(R.id.floatingActionButton_illustration);
         Bundle arguments=getArguments();
-        IllustrationClass ilus=arguments.getParcelable("illustrationRecommended");
+       IllustrationClass ilus=arguments.getParcelable("illustrationRecommended");
 
         if(ilus!=null){
             setViews(ilus);
-        }else if(ilus==null){
+        }else {
           ilus=arguments.getParcelable(  "illustrationRanking");
           setViews(ilus);
         }
 
-        backIllus.setOnClickListener(new View.OnClickListener() {
+        IllustrationClass finalIlus = ilus;
+        favbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            }
-        });
+
+
+        }});
         return v;
     }
+
 
     private void setViews(IllustrationClass ilustration){
         Picasso.with(getActivity()).load(ilustration.getIllustrationImgUrl()).into(image);
