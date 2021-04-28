@@ -328,25 +328,25 @@ public class FireBaseHelper {
 
 
 
-
-    public static String buscarImagenPerfil(String name){
-        final String[] urlIU = new String[1];
-        referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    User user = snapshot.getValue(User.class);
-                    assert user != null;
-                    if(user.getUsername().equals(name)){
-                        urlIU[0] = user.getImatgePerfil();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-        return urlIU[0];
-    }
+//
+//    public static String buscarImagenPerfil(String name){
+//        final String[] urlIU = new String[1];
+//        referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    User user = snapshot.getValue(User.class);
+//                    assert user != null;
+//                    if(user.getUsername().equals(name)){
+//                        urlIU[0] = user.getImatgePerfil();
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {}
+//        });
+//        return urlIU[0];
+//    }
 
     public static String[] buscar3Imagenes(String name){
         final String[] cuatroImagenes = new String[4];
@@ -369,8 +369,8 @@ public class FireBaseHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-
-        referenceImageUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref = referenceUsers.child(name).child("ImageProfile");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -386,6 +386,25 @@ public class FireBaseHelper {
 
 
         return cuatroImagenes;
+    }
+
+    public static String[] buscarImagenPerfil(String name){
+        final String[] imagenUsuario = new String[1];
+        DatabaseReference ref = referenceUsers.child(name).child("ImageProfile");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    String perfilImage = snapshot.getValue(String.class);
+                    assert perfilImage != null;
+                    imagenUsuario[0] = perfilImage;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        return imagenUsuario;
     }
 
     //region MANEJO_DE_IMAGEN

@@ -64,8 +64,11 @@ class ViewHolderFollowers extends RecyclerView.ViewHolder {
     }
 
     public void bind(){
+
+        String [] imageprofile;
         followButton = itemView.findViewById(R.id.followButton);
         boolean isfollow = FireBaseHelper.comprobarFollowing(model)[0];
+        imageprofile = FireBaseHelper.buscarImagenPerfil(model);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -79,10 +82,12 @@ class ViewHolderFollowers extends RecyclerView.ViewHolder {
                     followButton.setText("follow");
                     following = false;
                 }
-
+                System.out.println(imageprofile[0]);
+                Picasso.with(getContext()).load(imageprofile[0]).into(imageViewFollowers);
 
             }
         }, 200);
+
         followButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -102,8 +107,8 @@ class ViewHolderFollowers extends RecyclerView.ViewHolder {
 
 
 
-        Picasso.with(getContext()).load(model).into(imageViewFollowers);
-        ///metodo para cojer imagen de user
+
+
 
         textViewUsername.setText(model);
 
