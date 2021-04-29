@@ -105,19 +105,11 @@
                 android:textColor="@android:color/darker_gray"
                 android:textSize="16sp"
                 />
-
-
-
         </LinearLayout>
-
-
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton_illustration"
+        android:id="@+id/floatingActionButton_manga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
@@ -125,11 +117,9 @@
         android:backgroundTint="@color/white"
         android:clickable="true"
         android:focusable="true"
+        app:tint="@null"
         android:src="@drawable/likeheartwhite"
         app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription,MissingConstraints" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

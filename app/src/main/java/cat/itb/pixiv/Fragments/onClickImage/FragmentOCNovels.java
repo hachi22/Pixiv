@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.MangaClass;
 import cat.itb.pixiv.ClassesModels.NovelClass;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.HomeFragment;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
 import cat.itb.pixiv.R;
@@ -41,6 +43,7 @@ public class FragmentOCNovels extends Fragment {
         favbutton=v.findViewById(R.id.novel_oc_favbutton);
         Bundle arguments=getArguments();
         NovelClass novel =arguments.getParcelable("novelRecomended");
+        exitButton.setIconResource(R.drawable.close);
         if(novel!=null){
             setNovels(novel);
         }else if(novel==null){
@@ -48,11 +51,21 @@ public class FragmentOCNovels extends Fragment {
             setNovels(novel);
         }
 
+        User user = FireBaseHelper.getThisUser();
+        NovelClass finalNovel = novel;
+        String mangaId = finalNovel.getKey();
+
+        if (user.isFaved(mangaId)) {
+            favbutton.setIconResource(R.drawable.likeheartred);
+        } else {
+            favbutton.setIconResource(R.drawable.likeheartwhite);
+        }
+
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentHomeNovels()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
             }
         });
@@ -60,14 +73,22 @@ public class FragmentOCNovels extends Fragment {
         favbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (user.isFaved(mangaId)) {
+                    favbutton.setIconResource(R.drawable.likeheartwhite);
+                    user.removeFavorite(mangaId);
+                } else {
+                    favbutton.setIconResource(R.drawable.likeheartred);
+                    user.addFavorite(mangaId);
+                }
+                FireBaseHelper.updateDatabase(finalNovel);
+                FireBaseHelper.updateDatabase(user);
             }
         });
         return v;
     }
 
     private void setNovels(NovelClass novelc){
-        Picasso.with(getActivity()).load(novelc.getUserImgUrl()).into(userimage);
+//        Picasso.with(getActivity()).load(novelc.getUserImgUrl()).into(userimage);
         username.setText(novelc.getUsername());
         title.setText(novelc.getTitle());
         description.setText(novelc.getDescription());

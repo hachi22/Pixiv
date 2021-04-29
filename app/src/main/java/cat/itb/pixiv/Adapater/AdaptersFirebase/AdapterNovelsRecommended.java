@@ -65,8 +65,6 @@ class ViewHolderNovelsRecommended extends RecyclerView.ViewHolder {
         textViewTitle = itemView.findViewById(R.id.text_view_novels_recommended_title);
         textViewDescription = itemView.findViewById(R.id.text_view_novels_recommended_description);
         textViewNumlikes = itemView.findViewById(R.id.text_view_novels_recommended_numlikes);
-
-
     }
 
 

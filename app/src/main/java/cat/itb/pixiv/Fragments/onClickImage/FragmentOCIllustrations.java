@@ -47,10 +47,26 @@ public class FragmentOCIllustrations extends Fragment {
         }
 
         IllustrationClass finalIlus = ilus;
+        User user = FireBaseHelper.getThisUser();
+        String ilusId = finalIlus.getKey();
+        if (user.isFaved(ilusId)) {
+            favbutton.setImageResource(R.drawable.likeheartred);
+        } else {
+            favbutton.setImageResource(R.drawable.likeheartwhite);
+        }
         favbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println(ilusId);
+                if (user.isFaved(ilusId)) {
+                    favbutton.setImageResource(R.drawable.likeheartwhite);
+                    user.removeFavorite(ilusId);
+                } else {
+                    favbutton.setImageResource(R.drawable.likeheartred);
+                    user.addFavorite(ilusId);
+                }
+                FireBaseHelper.updateDatabase(finalIlus);
+                FireBaseHelper.updateDatabase(user);
 
         }});
         return v;

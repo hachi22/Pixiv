@@ -21,6 +21,7 @@ import java.util.List;
 
 import cat.itb.pixiv.Adapater.AdaptersFirebase.AdapterFavFragmentNovel;
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
+import cat.itb.pixiv.ClassesModels.MangaClass;
 import cat.itb.pixiv.ClassesModels.NovelClass;
 import cat.itb.pixiv.ClassesModels.User;
 import cat.itb.pixiv.FireBase.FireBaseHelper;
@@ -56,9 +57,13 @@ public class FavoriteFragmentNovel extends Fragment {
                     value=noveltration.getValue(NovelClass.class);
                     if(user.isFaved(value.getKey())){
                         novel.add(value);
+                    }else {
+                        for (NovelClass i:novel){
+                            if (i.getKey().equals(value.getKey())){
+                                novel.remove(i);
+                            }
+                        }
                     }
-
-                    System.out.println(noveltration.getValue(IllustrationClass.class).getTitle());
                 }
                 adapter.notifyDataSetChanged();
             }

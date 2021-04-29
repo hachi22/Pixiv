@@ -288,11 +288,11 @@ public class FireBaseHelper {
     public static void subirUserFollow(User user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
-        ref.child(user).setValue(user);
+        ref.child(user.getUsername()).setValue(user);
 
 
         //poner a la persona que le sigue alguien
-         referenceUsers.child(user).child("Followers").getRef();
+         referenceUsers.child(user.getUsername()).child("Followers").getRef();
          ref.child(thisUser.getKey()).setValue(thisUser);
          //
     }

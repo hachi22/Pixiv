@@ -30,6 +30,7 @@ import java.io.File;
 
 import cat.itb.pixiv.Adapater.SlideViewAdapter;
 import cat.itb.pixiv.BlankFragment;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.FavoriteFragment.FavoriteFragment;
 import cat.itb.pixiv.Fragments.FavoriteFragment.FavoriteFragmentIlusManga;
 import cat.itb.pixiv.Fragments.FollowFragments.FollowersFragment;
