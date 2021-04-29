@@ -309,7 +309,7 @@ public class FireBaseHelper {
     public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
-        ref.child(user.getUsername()).setValue(user);
+        ref.child(user).setValue(user);
 
 
         //poner a la persona que le sigue alguien
@@ -598,7 +598,7 @@ public class FireBaseHelper {
     }
     public static void updateDatabase(User firebaseItem)
     {
-     referenceUsers.child(firebaseItem.getKey()).setValue(firebaseItem);
+     referenceUsers.child(firebaseItem.getUsername()).setValue(firebaseItem);
     }
 
 }

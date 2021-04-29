@@ -77,7 +77,9 @@ public class AdapterIlustrationsRecomended extends FirebaseRecyclerAdapter<Illus
         imageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 User user = FireBaseHelper.getThisUser();
+                System.out.println(user);
 
                 if (user == null) {
                     return;

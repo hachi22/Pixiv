@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,9 +50,9 @@ public class FavoriteFragmentIlusManga extends Fragment {
         dbrefManga=FireBaseHelper.getReferenceMangaRecommended();
         adapterIlus =new AdapterFavFragmentIlus(ilus);
         adapterManga=new AdapterFavManga(manga);
-        recyclerViewIlus.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewIlus.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewIlus.setAdapter(adapterIlus);
-        recyclerManga.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerManga.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerManga.setAdapter(adapterManga);
         drefIlus.addValueEventListener(new ValueEventListener() {
             @Override
