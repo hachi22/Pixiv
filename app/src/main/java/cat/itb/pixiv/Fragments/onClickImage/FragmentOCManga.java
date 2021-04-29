@@ -81,9 +81,9 @@ public class FragmentOCManga extends Fragment {
         return v;
     }
 
-    private void setManga(MangaClass manga){
-        boolean isfollow = FireBaseHelper.comprobarFollowing(manga.getUserName())[0];
-
+    private void setManga( MangaClass manga){
+        final boolean isfollow = FireBaseHelper.comprobarFollowing(manga.getUserName())[0];
+        final MangaClass manga2 = manga;
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -98,11 +98,11 @@ public class FragmentOCManga extends Fragment {
                     following = false;
                 }
 
-                Picasso.with(getActivity()).load(manga.getMangaImgUrl()).into(image);
-                Picasso.with(getActivity()).load(manga.getUserImgUrl()).into(userimage);
-                username.setText(manga.getUserName());
-                title.setText(manga.getTitle());
-                description.setText(manga.getDescription());
+                Picasso.with(getActivity()).load(manga2.getMangaImgUrl()).into(image);
+                Picasso.with(getActivity()).load(manga2.getUserImgUrl()).into(userimage);
+                username.setText(manga2.getUserName());
+                title.setText(manga2.getTitle());
+                description.setText(manga2.getDescription());
 
             }
         }, 200);

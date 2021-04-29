@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
+import cat.itb.pixiv.ClassesModels.IllustrationPLClass;
 import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.HomeFragment;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
@@ -34,6 +35,8 @@ public class FragmentOCIllustrations extends Fragment {
     MaterialButton backIllus;
     MaterialButton followButton;
     boolean following;
+    FloatingActionButton favbutton;
+
 
 
     @Override
@@ -47,6 +50,8 @@ public class FragmentOCIllustrations extends Fragment {
         title=v.findViewById(R.id.illustration_text_view_oc_tittle);
         backIllus = v.findViewById(R.id.backIllustration);
         followButton = v.findViewById(R.id.followButtonIllustration);
+        favbutton=v.findViewById(R.id.floatingActionButton_illustration);
+
 
         Bundle arguments=getArguments();
         IllustrationClass ilus=arguments.getParcelable("illustrationRecommended");
@@ -81,14 +86,32 @@ public class FragmentOCIllustrations extends Fragment {
 
             }
         });
+
+        favbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(ilusId);
+                if (user.isFaved(ilusId)) {
+                    favbutton.setImageResource(R.drawable.likeheartwhite);
+                    user.removeFavorite(ilusId);
+                } else {
+                    favbutton.setImageResource(R.drawable.likeheartred);
+                    user.addFavorite(ilusId);
+                }
+                FireBaseHelper.updateDatabase(finalIlus);
+                FireBaseHelper.updateDatabase(user);
+
+            }});
         return v;
     }
 
 
 
+
     @SuppressLint("SetTextI18n")
-    private void setViews(IllustrationClass ilustration) {
-        boolean isfollow = FireBaseHelper.comprobarFollowing(ilustration.getUserName())[0];
+    private void setViews( IllustrationClass ilustration) {
+        final boolean isfollow = FireBaseHelper.comprobarFollowing(ilustration.getUserName())[0];
+        final IllustrationClass illustration = ilustration;
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -102,10 +125,10 @@ public class FragmentOCIllustrations extends Fragment {
                     following = false;
                 }
 
-                Picasso.with(getActivity()).load(ilustration.getIllustrationImgUrl()).into(image);
-                Picasso.with(getActivity()).load(ilustration.getUserImgUrl()).into(userimage);
-                username.setText(ilustration.getUserName());
-                title.setText(ilustration.getTitle());
+                Picasso.with(getActivity()).load(illustration.getIllustrationImgUrl()).into(image);
+                Picasso.with(getActivity()).load(illustration.getUserImgUrl()).into(userimage);
+                username.setText(illustration.getUserName());
+                title.setText(illustration.getTitle());
 
             }
         }, 200);
