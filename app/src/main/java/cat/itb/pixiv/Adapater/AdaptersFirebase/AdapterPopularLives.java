@@ -47,7 +47,7 @@ public class AdapterPopularLives extends FirebaseRecyclerAdapter<IllustrationPLC
     @NonNull
     @Override
     public AdapterPopularLives.ViewHolderPopularLives onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderPopularLives(LayoutInflater.from(parent.getContext()).inflate(R.id.recycler_view_illustrations_popular_lives,parent,false));
+        return new ViewHolderPopularLives(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_popular_lives,parent,false));
     }
 
     class ViewHolderPopularLives extends RecyclerView.ViewHolder{
@@ -66,7 +66,7 @@ public class AdapterPopularLives extends FirebaseRecyclerAdapter<IllustrationPLC
         public void bind(){
             Picasso.with(getContext()).load(model.getpLImageUrl()).into(imageView);
             textViewTitle.setText(model.getTitle());
-            textViewViews.setText(model.getNumViews());
+//            textViewViews.setText(model.getNumViews());
         }
     }
 }
