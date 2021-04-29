@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,19 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
-import cat.itb.pixiv.ClassesModels.IllustrationPLClass;
 import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.HomeFragment;
-import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
 import cat.itb.pixiv.ClassesModels.User;
-import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -66,9 +59,9 @@ public class FragmentOCIllustrations extends Fragment {
           setViews(ilus);
         }
 
-        IllustrationClass finalIlus = ilus;
-        User user = FireBaseHelper.getThisUser();
-        String ilusId = finalIlus.getKey();
+        final IllustrationClass finalIlus = ilus;
+        final User user = FireBaseHelper.getThisUser();
+        final String ilusId = finalIlus.getKey();
         if (user.isFaved(ilusId)) {
             favbutton.setImageResource(R.drawable.likeheartred);
         } else {
@@ -89,6 +82,30 @@ public class FragmentOCIllustrations extends Fragment {
                 FireBaseHelper.updateDatabase(user);
 
         }});
+
+        backIllus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            }
+        });
+
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+
+                following = !following;
+                if(following){
+                    followButton.setText("following");
+                    FireBaseHelper.subirUserFollow(username.getText().toString());
+                }else{
+                    followButton.setText("follow");
+                    FireBaseHelper.eliminarUserFollow(username.getText().toString());
+                }
+
+            }
+        });
         return v;
     }
 
@@ -119,9 +136,5 @@ public class FragmentOCIllustrations extends Fragment {
 
             }
         }, 200);
-
-
-
-
     }
 }
