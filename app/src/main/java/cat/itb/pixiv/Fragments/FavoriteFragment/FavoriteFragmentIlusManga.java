@@ -62,9 +62,13 @@ public class FavoriteFragmentIlusManga extends Fragment {
                     value=ilustration.getValue(IllustrationClass.class);
                     if(user.isFaved(value.getKey())){
                         ilus.add(value);
+                    }else{
+                        for (IllustrationClass i:ilus){
+                            if (i.getKey().equals(value.getKey())){
+                                ilus.remove(i);
+                            }
+                        }
                     }
-
-                    System.out.println(ilustration.getValue(IllustrationClass.class).getTitle());
                 }
                 adapterIlus.notifyDataSetChanged();
             }
@@ -82,10 +86,15 @@ public class FavoriteFragmentIlusManga extends Fragment {
                     value=ilustration.getValue(MangaClass.class);
                     if(user.isFaved(value.getKey())){
                         manga.add(value);
+                    }else {
+                        for (MangaClass i:manga){
+                            if (i.getKey().equals(value.getKey())){
+                                manga.remove(i);
+                            }
+                        }
                     }
-                    System.out.println(ilustration.getValue(IllustrationClass.class).getTitle());
                 }
-                adapterIlus.notifyDataSetChanged();
+                adapterManga.notifyDataSetChanged();
 
             }
 

@@ -110,6 +110,7 @@
                 android:id="@+id/novel_oc_favbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:iconTint="@null"
                 app:iconGravity="textStart"
                 app:icon="@drawable/likeheartwhite"
                 android:layout_weight="0.5"/>

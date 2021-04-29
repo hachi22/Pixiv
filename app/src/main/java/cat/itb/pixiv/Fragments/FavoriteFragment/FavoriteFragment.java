@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import cat.itb.pixiv.Adapater.SlideViewAdapter;
+import cat.itb.pixiv.Fragments.HomeFragment;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeIllustrations;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeManga;
 import cat.itb.pixiv.Fragments.HomeFragments.FragmentHomeNovels;
@@ -26,8 +27,6 @@ public class FavoriteFragment extends Fragment {
     ViewPager viewPager;
     TabLayout tabLayout;
     private MaterialToolbar topAppBar;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
 
 
 
@@ -45,7 +44,6 @@ public class FavoriteFragment extends Fragment {
         viewPager = v.findViewById(R.id.slide_view_pager_fav);
         tabLayout= v.findViewById(R.id.tablayout_favorite);
         topAppBar= v.findViewById(R.id.top_appbar_favorite);
-        drawerLayout= v.findViewById(R.id.drawer_layout_fav);
 
         SlideViewAdapter slideViewAdapter=new SlideViewAdapter(getFragmentManager());
         slideViewAdapter.addFragment(FavoriteFragmentIlusManga.getInstance(),"Illust/Manga");
@@ -53,18 +51,13 @@ public class FavoriteFragment extends Fragment {
         viewPager.setAdapter(slideViewAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                getActivity(),
-                drawerLayout,
-                topAppBar,
-                R.string.openNavDrawer,
-                R.string.closeNavDrawer
-        );
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
+        topAppBar.setNavigationIcon(R.drawable.ic_arrow_back);
+        topAppBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            }
+        });
        return v;
     }
 }
