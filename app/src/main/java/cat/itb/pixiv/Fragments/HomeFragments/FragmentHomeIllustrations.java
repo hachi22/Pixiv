@@ -55,7 +55,7 @@ public static FragmentHomeIllustrations getInstance(){
         FireBaseHelper.setAllReferences();
 
         recyclerView = rootView.findViewById(R.id.recycler_view_illustrations_ranking);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         FirebaseRecyclerOptions<IllustrationClass> options = new FirebaseRecyclerOptions.Builder<IllustrationClass>()
                 .setQuery(FireBaseHelper.getReferenceIllustrationsRanking(), IllustrationClass.class).build();
@@ -66,7 +66,7 @@ public static FragmentHomeIllustrations getInstance(){
 
 
         recyclerView = rootView.findViewById(R.id.recycler_view_illustrations_popular_lives);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         FirebaseRecyclerOptions<IllustrationPLClass> options2 = new FirebaseRecyclerOptions.Builder<IllustrationPLClass>()
                 .setQuery(FireBaseHelper.getReferenceIllustrationsPopularLives(), IllustrationPLClass.class).build();

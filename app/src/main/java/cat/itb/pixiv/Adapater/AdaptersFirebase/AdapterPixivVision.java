@@ -43,7 +43,7 @@ public class AdapterPixivVision extends FirebaseRecyclerAdapter<MangaPixivVision
     @NonNull
     @Override
     public AdapterPixivVision.ViewHolderPixivVision onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderPixivVision(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_illustrations_ranking,parent,false));
+        return new ViewHolderPixivVision(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_manga_pixivision,parent,false));
     }
 
     class ViewHolderPixivVision extends RecyclerView.ViewHolder {

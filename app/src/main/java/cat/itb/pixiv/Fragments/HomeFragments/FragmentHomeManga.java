@@ -59,7 +59,7 @@ public class FragmentHomeManga extends Fragment {
 
 
         recyclerView = rootView.findViewById(R.id.recycler_view_manga_ranking);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         FirebaseRecyclerOptions<MangaClass> options = new FirebaseRecyclerOptions.Builder<MangaClass>()
                 .setQuery(FireBaseHelper.getReferenceMangaRanking(), MangaClass.class).build();
         adapterRanking = new AdapterRankingMangas(options);
@@ -69,7 +69,7 @@ public class FragmentHomeManga extends Fragment {
 
 
         recyclerView = rootView.findViewById(R.id.recycler_view_manga_pixi_vision);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         FirebaseRecyclerOptions<MangaPixivVisionClass> options2 = new FirebaseRecyclerOptions.Builder<MangaPixivVisionClass>()
                 .setQuery(FireBaseHelper.getReferenceMangaPixivVision(), MangaPixivVisionClass.class).build();
         adapterPixivVision = new AdapterPixivVision(options2);
