@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.IllustrationClass;
 import cat.itb.pixiv.ClassesModels.ImatgesP;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.onClickImage.FragmentOCIllustrations;
 import cat.itb.pixiv.R;
 
@@ -71,16 +73,36 @@ public class AdapterRankingIllustrations extends FirebaseRecyclerAdapter<Illustr
             textViewTitle.setText(ilus.getTitle());
             textViewUser.setText(ilus.getUserName());
 
-            final boolean[] heart = {false};
+            User user = FireBaseHelper.getThisUser();
+
+            if (user != null) {
+                imageLike.setImageResource(user.isFaved(ilus.getKey())?R.drawable.likeheartred:R.drawable.likeheartwhite);
+            }
             imageLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(heart[0]){
+
+                    User user = FireBaseHelper.getThisUser();
+                    System.out.println(user);
+
+                    if (user == null) {
+                        return;
+                    }
+                    String ilusId = ilus.getKey();
+                    if (user.isFaved(ilusId)) {
                         imageLike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageLike.setImageResource(R.drawable.likeheartred);
-                    heart[0] = !heart[0];
+                        user.removeFavorite(ilusId);
+                    } else {
+                        imageLike.setImageResource(R.drawable.likeheartred);
+                        user.addFavorite(ilusId);
+                    }
+                    FireBaseHelper.updateDatabase(ilus);
+                    FireBaseHelper.updateDatabase(user);
                 }
             });
+
+
+
             imageViewImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

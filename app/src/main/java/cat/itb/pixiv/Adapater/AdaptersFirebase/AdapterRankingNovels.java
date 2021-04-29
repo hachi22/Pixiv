@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import cat.itb.pixiv.ClassesModels.ImatgesP;
 import cat.itb.pixiv.ClassesModels.NovelClass;
+import cat.itb.pixiv.ClassesModels.User;
+import cat.itb.pixiv.FireBase.FireBaseHelper;
 import cat.itb.pixiv.Fragments.onClickImage.FragmentOCNovels;
 import cat.itb.pixiv.R;
 
@@ -66,20 +68,38 @@ public class AdapterRankingNovels extends FirebaseRecyclerAdapter<NovelClass, Ad
 
         public void bind(final NovelClass novel){
             Picasso.with(getContext()).load(model.getNovelImgUrl()).into(imageViewimage);
-            final boolean[] heart = {false};
-            imageViewlike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(heart[0]){
-                        imageViewlike.setImageResource(R.drawable.likeheartwhite);
-                    }else imageViewlike.setImageResource(R.drawable.likeheartred);
-                    heart[0] = !heart[0];
-                }
-            });
 
             textViewTitle.setText(model.getTitle());
             textViewDescription.setText(model.getDescription());
             textViewUser.setText(model.getUserImgUrl());
+
+            User user = FireBaseHelper.getThisUser();
+
+            if (user != null) {
+                imageViewlike.setImageResource(user.isFaved(novel.getKey())?R.drawable.likeheartred:R.drawable.likeheartwhite);
+            }
+
+            imageViewlike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    User user = FireBaseHelper.getThisUser();
+
+                    if (user == null) {
+                        return;
+                    }
+                    String mangaId = novel.getKey();
+                    if (user.isFaved(mangaId)) {
+                        imageViewlike.setImageResource(R.drawable.likeheartwhite);
+                        user.removeFavorite(mangaId);
+                    } else {
+                        imageViewlike.setImageResource(R.drawable.likeheartred);
+                        user.addFavorite(mangaId);
+                    }
+                    FireBaseHelper.updateDatabase(novel);
+                    FireBaseHelper.updateDatabase(user);
+                }
+            });
+
 
             imageViewimage.setOnClickListener(new View.OnClickListener() {
                 @Override
