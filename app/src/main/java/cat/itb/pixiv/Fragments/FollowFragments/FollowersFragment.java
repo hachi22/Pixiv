@@ -51,8 +51,8 @@ public class FollowersFragment extends Fragment {
         followButton = rootView.findViewById(R.id.followButton);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
-                .setQuery(FireBaseHelper.getUserFollower(), User.class).build(); //getUserFollower() la he puesto en el firebaseHelper, pero mal
+        FirebaseRecyclerOptions<String> options = new FirebaseRecyclerOptions.Builder<String>()
+                .setQuery(FireBaseHelper.getUserFollower(), String.class).build(); //getUserFollower() la he puesto en el firebaseHelper, pero mal
         adapterFollowers = new AdapterFollowers(options);
         adapterFollowers.setContext(getContext());
         recyclerView.setAdapter(adapterFollowers);

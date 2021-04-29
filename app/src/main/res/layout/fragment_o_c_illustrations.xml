@@ -22,12 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/backIllustration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_arrow_back" />
-
             <ImageView
                 android:id="@+id/illustratrion_oc_Image"
                 android:layout_width="match_parent"
@@ -35,6 +29,18 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"
                 android:src="@drawable/img10" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/backIllustration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    app:icon="@drawable/ic_arrow_back" />
             </RelativeLayout>
 
 

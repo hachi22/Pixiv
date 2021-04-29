@@ -33,7 +33,7 @@ public class FollowingFragment extends Fragment {
     RecyclerView recyclerView;
     AdapterFollowing adapterFollowing;
 
-
+    String[] images;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +52,15 @@ public class FollowingFragment extends Fragment {
         imageView2 = rootView.findViewById(R.id.img_following_2);
         imageView3 = rootView.findViewById(R.id.img_following_3);
 
+
+
         //imageView1.setImageResource();
         //imageView2.setImageResource(); TODO: poner las imagenes del user al que sigues
         //imageView3.setImageResource();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
-                .setQuery(FireBaseHelper.getUserFollower(), User.class).build(); //TODO: cambiar el getUserFollower()
+        FirebaseRecyclerOptions<String> options = new FirebaseRecyclerOptions.Builder<String>()
+                .setQuery(FireBaseHelper.getUserFollower(), String.class).build(); //TODO: cambiar el getUserFollower()
         adapterFollowing = new AdapterFollowing(options);
         adapterFollowing.setContext(getContext());
         recyclerView.setAdapter(adapterFollowing);

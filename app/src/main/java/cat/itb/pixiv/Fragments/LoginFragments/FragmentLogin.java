@@ -90,7 +90,7 @@ public class FragmentLogin extends Fragment {
                                     transaction.replace(R.id.fragment_container, new HomeFragment()).commit();
                                 }
                             }
-                        }, 200);   //5 seconds
+                        }, 200);
 
                     }
                 }

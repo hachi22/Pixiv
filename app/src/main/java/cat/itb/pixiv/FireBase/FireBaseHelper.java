@@ -173,7 +173,28 @@ public class FireBaseHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
 
+    public static boolean[] comprobarFollowing(String userFollowing){
+        final boolean[] follow = new boolean[1];
+        following.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String username = snapshot.getValue(String.class);
+                    System.out.println(userFollowing);
+                    System.out.println(username);
+                    if(userFollowing.equals(username)){
+                        follow[0] = true;
+                    }else{
+                        follow[0]=false;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        return follow;
     }
 
 
@@ -285,15 +306,15 @@ public class FireBaseHelper {
     }
 //endregion
 
-    public static void subirUserFollow(User user){
+    public static void subirUserFollow(String user){
         //poner que sigues a esa persona
         DatabaseReference ref = following.getRef();
         ref.child(user.getUsername()).setValue(user);
 
 
         //poner a la persona que le sigue alguien
-         referenceUsers.child(user.getUsername()).child("Followers").getRef();
-         ref.child(thisUser.getKey()).setValue(thisUser);
+         ref = referenceUsers.child(user).child("Followers").getRef();
+         ref.child(thisUser.getUsername()).setValue(thisUser.getUsername());
          //
     }
 
@@ -307,30 +328,29 @@ public class FireBaseHelper {
 
 
 
-
-    public static String buscarImagenPerfil(String name){
-        final String[] urlIU = new String[1];
-        referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    User user = snapshot.getValue(User.class);
-                    assert user != null;
-                    if(user.getUsername().equals(name)){
-                        urlIU[0] = user.getImatgePerfil();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-        return urlIU[0];
-    }
+//
+//    public static String buscarImagenPerfil(String name){
+//        final String[] urlIU = new String[1];
+//        referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    User user = snapshot.getValue(User.class);
+//                    assert user != null;
+//                    if(user.getUsername().equals(name)){
+//                        urlIU[0] = user.getImatgePerfil();
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {}
+//        });
+//        return urlIU[0];
+//    }
 
     public static String[] buscar3Imagenes(String name){
-        final String[] tresImagenes = new String[3];
+        final String[] cuatroImagenes = new String[4];
         DatabaseReference ref = referenceUsers.child(name).child("MyWorks").child("Illustration");
-
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -338,9 +358,9 @@ public class FireBaseHelper {
 
                     IllustrationClass image = snapshot.getValue(IllustrationClass.class);
                     assert image != null;
-                    for(int i = 0;i<tresImagenes.length;i++){
-                        if(tresImagenes[i]==null){
-                            tresImagenes[i] = image.getIllustrationImgUrl();
+                    for(int i = 0;i<cuatroImagenes.length && i<3;i++){
+                        if(cuatroImagenes[i]==null){
+                            cuatroImagenes[i] = image.getIllustrationImgUrl();
                         }
                     }
 
@@ -349,7 +369,42 @@ public class FireBaseHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-        return tresImagenes;
+        ref = referenceUsers.child(name).child("ImageProfile");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    String perfilImage = snapshot.getValue(String.class);
+                    assert perfilImage != null;
+                    cuatroImagenes[3] = perfilImage;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+
+        return cuatroImagenes;
+    }
+
+    public static String[] buscarImagenPerfil(String name){
+        final String[] imagenUsuario = new String[1];
+        DatabaseReference ref = referenceUsers.child(name).child("ImageProfile");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    String perfilImage = snapshot.getValue(String.class);
+                    assert perfilImage != null;
+                    imagenUsuario[0] = perfilImage;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        return imagenUsuario;
     }
 
     //region MANEJO_DE_IMAGEN
@@ -489,7 +544,7 @@ public class FireBaseHelper {
     }
 
     public static DatabaseReference getUserFollower() {
-        return userFollower;
+        return following;
     }
 
     public static DatabaseReference getUserMyWorksManga() {
